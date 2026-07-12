@@ -1,16 +1,16 @@
 :root {
   color-scheme: dark;
-  --bg: #030711;
-  --panel: rgba(255, 255, 255, 0.12);
-  --panel-2: rgba(255, 255, 255, 0.08);
-  --text: #f8fbff;
-  --muted: #b6c2d2;
-  --accent: #7dd3fc;
-  --accent-2: #a78bfa;
-  --border: rgba(255, 255, 255, 0.18);
-  --shadow: rgba(2, 8, 23, 0.35);
-  --topbar-bg: rgba(8, 15, 31, 0.55);
-  --nav-bg: rgba(8, 15, 31, 0.72);
+  --bg: #05030a;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-2: rgba(255, 255, 255, 0.03);
+  --text: #eafcff;
+  --muted: #97a6b8;
+  --accent: #00fff0; /* neon cyan */
+  --accent-2: #7c3aed; /* electric purple */
+  --border: rgba(255, 255, 255, 0.12);
+  --shadow: rgba(2, 8, 23, 0.45);
+  --topbar-bg: rgba(12, 14, 18, 0.55);
+  --nav-bg: rgba(12, 14, 18, 0.72);
 }
 
 body[data-theme="light"] {
@@ -61,11 +61,29 @@ body {
   font-family: 'Inter', sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 20%, transparent), transparent 28%),
-    radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 30%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+    radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 34%),
     var(--bg);
   line-height: 1.6;
   transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* subtle animated tech grid overlay */
+body::before{
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  animation: gridShift 20s linear infinite;
+}
+
+@keyframes gridShift{
+  from{background-position: 0 0, 0 0}
+  to{background-position: 120px 120px, -120px -120px}
 }
 
 a {
@@ -83,7 +101,7 @@ a {
   gap: 1rem;
   padding: 1rem 2rem;
   margin: 1rem 1rem 0;
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--topbar-bg);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -92,9 +110,11 @@ a {
 }
 
 .brand {
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+  font-size: 0.95rem;
 }
 
 .header-actions {
@@ -203,6 +223,8 @@ main {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.1;
   margin: 0 0 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-shadow: 0 8px 30px rgba(124,58,237,0.06), 0 2px 8px rgba(0,255,240,0.03);
 }
 
 .hero-text,
@@ -223,6 +245,8 @@ main {
 
 .btn {
   display: inline-block;
+  position: relative;
+  overflow: hidden;
   padding: 0.85rem 1.3rem;
   border-radius: 999px;
   font-weight: 600;
@@ -234,9 +258,27 @@ main {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: white;
-  box-shadow: 0 10px 24px rgba(125, 211, 252, 0.2);
+  box-shadow: 0 6px 18px rgba(0,255,240,0.06);
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.35), transparent 55%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 40px rgba(0,255,240,0.16), 0 0 90px rgba(124,58,237,0.12);
+}
+.btn-primary:hover::after {
+  opacity: 1;
 }
 
 .btn-secondary {
@@ -269,16 +311,17 @@ main {
 .card,
 .timeline-item,
 .contact {
-  background: linear-gradient(135deg, var(--panel), var(--panel-2));
-  border: 1px solid var(--border);
-  box-shadow: 0 20px 45px var(--shadow);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 14px 38px rgba(2,8,23,0.55), 0 0 40px rgba(124,58,237,0.02) inset;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .hero-card {
-  padding: 2rem;
-  border-radius: 24px;
+  padding: 1.6rem;
+  border-radius: 12px;
+  border-top: 3px solid var(--accent-2);
 }
 
 .avatar {
@@ -321,6 +364,12 @@ main {
   padding: 2.3rem 0;
 }
 
+/* Techy accent for eyebrow labels */
+.section-heading p.eyebrow {
+  color: var(--accent-2);
+  font-family: 'JetBrains Mono', monospace;
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -352,8 +401,9 @@ main {
 }
 
 .card {
-  padding: 1.2rem;
-  border-radius: 18px;
+  padding: 1.1rem;
+  border-radius: 12px;
+  border-top: 3px solid rgba(124,58,237,0.08);
 }
 
 .card ul {
@@ -456,5 +506,164 @@ footer {
 
   .card-stats {
     grid-template-columns: 1fr;
+  }
+
+  /* Make theme button icon-only on small screens (hide text but keep aria-label) */
+  .theme-toggle {
+    font-size: 0; /* hide visible text */
+    width: 40px;
+    height: 36px;
+    padding: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle::after {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    box-shadow: 0 0 6px rgba(255,255,255,0.12);
+  }
+}
+
+/* Prevent rendering glitches on small/mobile screens by disabling heavy overlay animation
+   and forcing GPU compositing for cards and project grid. */
+@media (max-width: 900px) {
+  body::before {
+    animation: none;
+    opacity: 0.03;
+  }
+
+  .project-grid,
+  .card,
+  .hero-card {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  /* Improve shadow visibility on mobile: make shadows stronger and ensure elements sit above overlay */
+  .topbar {
+    box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+    position: relative;
+    z-index: 12;
+  }
+
+  .hero-card,
+  .card,
+  .contact {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* stronger shadows for timeline items and project cards on small screens */
+  .timeline-item,
+  .card,
+  .hero-card {
+    box-shadow: 0 12px 24px rgba(2,8,23,0.45);
+    -webkit-box-shadow: 0 12px 24px rgba(2,8,23,0.45);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+
+/* Hide the grid overlay on very small screens to avoid visual artifacts */
+@media (max-width: 480px) {
+  body::before { display: none; }
+}
+  /* make sure accent glows don't get clipped */
+  main {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 360px) {
+  .topbar {
+    padding: 0.6rem 0.8rem;
+    margin: 0.6rem 0.6rem 0;
+    border-radius: 18px;
+  }
+
+  main {
+    width: calc(100% - 1rem);
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 1.6rem 0 1rem;
+    gap: 1rem;
+  }
+
+  .project-grid {
+    gap: 0.6rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .btn {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  .section.contact .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.9rem 1rem;
+  }
+
+  /* Additional tiny-screen tweaks */
+  .brand {
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+    line-height: 1.12;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-text {
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    text-align: center;
+  }
+
+  .hero-card {
+    margin-top: 1rem;
   }
 }
