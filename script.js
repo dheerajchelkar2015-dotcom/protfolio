@@ -29,6 +29,13 @@ if (toggle && navLinks) {
     const isOpen = navLinks.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
   });
+
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 }
 
 if (themeToggle) {
@@ -41,3 +48,26 @@ if (themeToggle) {
     applyTheme(nextTheme, nextAccent);
   });
 }
+
+const typeHeroTitle = () => {
+  const titleEl = document.getElementById('hero-title');
+  if (!titleEl) return;
+
+  const text = titleEl.textContent.trim();
+  titleEl.textContent = '';
+  titleEl.classList.add('typing');
+
+  let index = 0;
+  const speed = 60;
+  const timer = setInterval(() => {
+    if (index < text.length) {
+      titleEl.textContent += text[index];
+      index += 1;
+    } else {
+      clearInterval(timer);
+      titleEl.classList.remove('typing');
+    }
+  }, speed);
+};
+
+typeHeroTitle();
