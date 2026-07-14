@@ -711,6 +711,16 @@ footer {
     border: 1px solid rgba(255,255,255,0.03);
   }
 
+  /* Use hover-style card appearance on mobile so touch users see the elevated effect by default */
+  .hero-card,
+  .card,
+  .timeline-item,
+  .contact {
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.22), inset 0 0 28px rgba(124,58,237,0.04);
+  }
+
   /* make sure accent glows don't get clipped */
   main {
     position: relative;
